@@ -1,0 +1,36 @@
+\input{../../design-template/designGUT}  % import GUT design for dissertation
+% ###################################################################################
+% A 'user_config.tex' file has to be created in the subfolder 'additionals'
+% All document type dependent (BA, MA, DISS) settings take place in this file, i.e. setting title, reviewer name or type of document. Additionally loaded packages or other user-dependent settings like adding a bibliography can also be defined there. 
+% ###################################################################################
+
+% The bibliography should be included in the main.tex document, so that TeXstudio (or similar) knows that there is a bibliography and executes the biblatex (biber) compiler accordingly when the bibliography is changed.
+\addbibresource{additionals/bibliography.bib}  % add bibliography
+
+\begin{document}
+
+	% Helpfull features for review process
+	%\linenumbers  % add numbers to each line
+	%\setstretch{2}  % set line spacing to factor 2
+	
+	\input{../../design-template/\myTitlepage}  % include correct title page
+	
+	\frontmatter  % start front matter section
+		\pagenumbering{Roman}  % set page numbering to Roman
+		
+		\tableofcontents  % print table of contents
+		\listoffigures  % print table of figures
+		\listoftables  % print table of tables
+		\printacronyms  % print list of acronyms
+		\input{chapter/symbols}  % include list of symbols
+	
+	
+	\mainmatter  % start main matter (arabic page numbering)
+		\input{chapter/_content}  % YOUR research content
+		\printbibliography[title={\myBibCaption}]  % print bibliography
+	
+	
+	\appendix  % begin appendix
+		\input{chapter/appendix}  % include appendix content
+
+\end{document}

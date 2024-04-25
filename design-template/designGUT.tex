@@ -1,0 +1,253 @@
+%% Template created by Sven F. Biebricher
+%% This template is licensed under GNU GENERAL PUBLIC LICENSE 3.0
+
+\documentclass[	paper=a4,  % paper size set to DIN A4
+								twoside = true,  % two side formatting
+								fontsize = 12,  % font size for \normalsize set to 12
+								% parskip = half,  % paragraphs are separated by 0.5\baselineskip
+								BCOR = 0cm,  % sets bonding correction (Bindekorrektur) to 0 cm
+								toc = listof,  % List of figures and tables to table of contents
+								toc = bibliography,  % add bibliography to table of contens
+								listof = entryprefix,  % add entry prefix to list of figures and tables
+								numbers = noendperiod,  % no dot at the end of chapter and section labels
+								% set language that will be send to all language dependend packages, e.g. babel
+								english  % set language to english
+								% ngerman  % set language to new german
+							]{scrbook}  % document class
+
+
+% ########################
+% Load necessary packages
+% ########################
+	
+	\RequirePackage{babel}[2020/10/27]  % set language via option in document class
+
+	\usepackage[headsepline,  % plotted line under each headline
+							plainheadsepline,  % plotted line over each headline even on plain pages (chapter beginning)
+							footsepline,  % plotted line over each footline
+							plainfootsepline  % plotted line over each footline even on plain pages
+						 ]{scrlayer-scrpage}  % package for manipulating headlines
+	
+	\usepackage[	inner = 2.5cm,
+								outer = 2cm,
+								top = 3.25cm,
+								bottom = 3cm
+						 ]{geometry}  % manipulate page margins
+						 
+	\usepackage{setspace}  % change linespacing
+						 
+	\usepackage[T1]{fontenc}  % changed font encoding to west-european letters
+	\usepackage{textalpha}  % use greek letters in text directly like α
+	\usepackage{lmodern}  % modification of fonts to make them 'clearer'
+	\usepackage{textcomp}  % eg. modified € und § symbols
+	\usepackage{csquotes}  % provides advanced facilities for inline and display quotations
+	
+	\usepackage[scaled]{uarial}  % Use Arial-clone font as sffamily-font
+	
+	\usepackage{xcolor}  % makes latex more colorful
+	
+	\usepackage{microtype}  % Better results in line breaks and overfull boxes 
+	%error
+	
+	\usepackage[labelsep=quad,  % Add a \quad after caption label
+							format=hang,  % Captionlabels with multiple lines are hanging
+							font={footnotesize, sf},  % changing font for caption label and 
+							%text
+							labelfont=bf  % changing font only for caption text
+						 ]{caption}  % additional options for captions and required for subcaption package
+
+	\usepackage{subcaption}  % includes subfigure environment
+	
+	\usepackage{amsmath}  % highly improves math mode
+	\usepackage{booktabs}  % beautify tables
+	\usepackage{longtable}  % environment to create tables of a length of multiple pages
+	\usepackage{tabularx}  % create tabulars with a fixed width (one flexible col)
+	\usepackage{pdfpages}  % include multiple pages of pdf documents
+	\usepackage{lscape}  % introduced the landscape environment to turn tables landscape
+	
+	\usepackage{todonotes}  % creates to-do items and figures
+	
+	\usepackage[hidelinks]{hyperref}  % hide links in pdf document
+	
+	\usepackage{graphicx}  % include graphics
+						 
+	\usepackage[style = rwth-gib,  % change style in toc to 'authoryear';change citation style to 	'authoryear-comp' (Fuentes 2018, 2019) instead of (Fuentes 2018, Fuentes 2019) without -comp
+							maxbibnames = 99, % arbitrary high value to ensure that all authors are listet in the bibliography
+							maxcitenames = 2, % truncate nameslist for citations
+							giveninits = true, % abbrevation for first name
+							date = year, % controls the basic format of printed date specifications
+							uniquelist = false, % This feature allows ambiguous labelname list --> unique dateformat (e.g. 2020a, 2020b)
+							dashed = false % This option controls whether recurrent the same author/editor list in the bibliography are replaced by a dash
+							]{biblatex}  % use biblatex for bibliography
+
+	\usepackage{acro}  % handle acronyms
+
+	\usepackage[range-units=single  % on default show only a single unit when using /SIrange{}
+						 ]{siunitx}  % helpfull to show value-unit-pairs in text
+						 
+	\usepackage{enumitem}  % improves enumerate and itemize environment
+
+
+% ########################
+% Define page design
+% ########################
+	
+	% Define formatting of headlines
+	\setkomafont{chapter}{\Large\sffamily}
+	\setkomafont{section}{\large\sffamily}
+	\setkomafont{subsection}{\normalsize\sffamily}
+	\setkomafont{subsubsection}{\normalsize\sffamily}
+	\setkomafont{pageheadfoot}{\footnotesize}
+	\setkomafont{pagefoot}{\usekomafont{pageheadfoot}}
+	\setkomafont{pagenumber}{\usekomafont{pageheadfoot}}
+	\addtokomafont{disposition}{\rmfamily}
+	\setcounter{secnumdepth}{\subsubsectionnumdepth}  % activate numbering of subsubsection
+	
+	% Define header
+	\clearpairofpagestyles  % clear existing header and footer
+	% without *: only on regular pages
+	% with *: also on plain pages (like chapter beginning)
+	\ihead*[\sffamily\leftmark]{\sffamily\headmark}  % Inside show caption of chapter (left) / section (right); on plain pages allways chapter (leftmark)
+	\ohead*{\sffamily\pagemark}  % Outside show page number
+	
+	% Define footer	
+	\ifoot*{\sffamily\myFootText}  % Show authors name
+	
+	% Set line spacing to 1.15
+	\setstretch{1.15}
+	
+	% Set parskip to 0.25 instead of half or full
+	\setparsizes{0em}{0.25\baselineskip plus .25\baselineskip}{1em plus 1fil}
+	
+	% Disable single lines at the start of a paragraph (orphans)
+	\clubpenalty = 10000
+	% Disable single lines at the end of a paragraph (widows)
+	\widowpenalty = 10000 \displaywidowpenalty = 10000
+	
+	\acsetup{list/display=used}  % show only used acronyms in listing
+	
+	% Defaults for figure environments
+		\setkeys{Gin}{keepaspectratio=true}  % allways keep aspact ratio of figures
+		
+	% Define enumerate end itemize environment defaults
+		\setlist{nosep, itemsep=0.3ex}  % set margin of enumerate and itemize environment
+		\setlist[itemize]{label=--}  % set itemize label to dash
+
+
+% ########################	
+% Define predefined colors
+% ########################	
+	\definecolor{grey}{rgb}{0.8,0.8,0.8}  % Define RWTH grey for title pages
+
+	
+% ########################
+% Table enhancements
+% ########################
+
+	% Adding new columntypes with option of width specification and vertical centering
+	% Example: \begin{tabular}{L{4.0cm}C{3cm}}
+	\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}} % flush left with  width specification
+	\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}} % flush right with  width specification
+	\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}  % centered with  width specification
+
+
+% ########################
+% Set caption names
+% ########################
+	% Set names for bibliography and acronym list (german and english)
+	\iflanguage{ngerman}{
+		\def\myBibCaption{Literaturverzeichnis}
+		\def\myAcronymListCaption{Abkürzungsverzeichnis}
+	}{
+		\def\myBibCaption{Bibliography}
+		\def\myAcronymListCaption{Acronyms}
+	}
+	
+	% set chapter title for list of acronyms
+	\acsetup{list/name={\myAcronymListCaption}}  
+
+% ################################################
+% Language setup for siunitx
+% ################################################
+\addto\extrasngerman{\sisetup{locale = DE}}
+\addto\extrasenglish{\sisetup{locale = US}}
+
+% ################################################
+% Document type-dependent configurations
+% ################################################
+	% Include users configuration file if it exists
+	\InputIfFileExists{additionals/user_config.tex}{}{
+		% If user_config.tex file not found the following defaults are set to prevent crashes
+		\def\myAuthor{Your Name, if necessary Birth Name}
+		\def\myAuthorSex{}  % male/female
+		\def\myFirstReviewer{First Reviewer}
+		\def\mySecondReviewer{Second Reviewer}
+		\def\myExamDate{30.02.2021}
+		\def\myThesisType{DISS} % BA, MA or DISS
+		
+		\def\myTitle{Dissertation Title}
+		\def\mySubtitle{Subtitle for Dissertation}
+		
+		\def\myTitleDe{Deutscher Titel der Arbeit}
+		\def\myTitleEn{English Thesis Title}
+		
+		\def\mySupervisor{Supervisors Name}
+		\def\myExamLocation{Location}
+
+	}
+	
+	% Create variable german study programm name in \myStudyProgramNameDe depending on thesis type (BA/MA)
+	\def\myStudyProgramNameDe{
+		\ifthenelse{\equal{\myThesisType}{MA}}{Masterarbeit}{%
+			\ifthenelse{\equal{\myThesisType}{BA}}{Bachelorarbeit}{%
+			}
+		}
+	}
+	
+	% Create variable english study programm name (\myStudyProgramNameDe) depending on thesis type (BA/MA)
+	\def\myStudyProgramNameEn{
+		\ifthenelse{\equal{\myThesisType}{MA}}{Master Thesis}{%
+			\ifthenelse{\equal{\myThesisType}{BA}}{Bachelor Thesis}{%
+			}
+		}	
+	}
+	
+	% Set study programm name (\myStudyProgramName) depending on language and thesis type
+	\iflanguage{ngerman}{
+		\def\myStudyProgramName{\myStudyProgramNameDe}
+	}{
+		\def\myStudyProgramName{\myStudyProgramNameEn}
+	}
+	
+	% Set footer depending on thesis type
+	\def\myFootText{\ifthenelse{\equal{\myThesisType}{DISS}}{Dissertation }{%
+			\ifthenelse{\equal{\myThesisType}{MA}}{\myStudyProgramName}{%
+				\ifthenelse{\equal{\myThesisType}{BA}}{\myStudyProgramName}{%
+				}%
+			}%
+		}\myAuthor}
+	
+	% Set file names of available title pages
+	\def\myTitlepageDissertation{titlepage_dissertation_de}
+	\def\myTitlepageBaMaThesis{titlepage_bachelor_master}
+	
+	% Select title page depending on thesis/dissertation type
+	\ifthenelse{
+		\equal{\myThesisType}{DISS}
+	}{
+		\def\myTitlepage{\myTitlepageDissertation}
+	}{
+		\ifthenelse{
+			\equal{\myThesisType}{MA}
+		}{
+			\def\myTitlepage{\myTitlepageBaMaThesis}
+		}{
+			\ifthenelse{
+				\equal{\myThesisType}{BA}
+			}{
+				\def\myTitlepage{\myTitlepageBaMaThesis}
+			}{
+				\def\myTitlepage{}
+			}
+		}
+	}
